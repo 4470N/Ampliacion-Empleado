@@ -573,6 +573,31 @@
           <label>Domicilio actual del empleado <span class="req">*</span></label>
           <input type="text" id="domicilio_actual" placeholder="Calle, número, localidad, provincia" maxlength="80">
         </div>
+
+        <div class="divider"></div>
+
+        <div class="info-box">
+          <strong>Recorrido al trabajo:</strong> Esta información es necesaria para acreditar el accidente in itinere (ocurrido en el trayecto hacia o desde el trabajo).
+        </div>
+
+        <div class="field">
+          <label>Recorrido habitual de ida y vuelta al trabajo <span class="req">*</span></label>
+          <textarea id="recorrido_diario" placeholder="Describí el trayecto que hacés normalmente para ir y volver del trabajo. Ej: Salgo de mi casa en Av. Mitre 123 (Quilmes), tomo el colectivo 98 hasta Constitución, luego subte línea C hasta..." style="min-height: 110px;"></textarea>
+        </div>
+
+        <div class="field">
+          <label>Transportes que utiliza <span class="req">*</span></label>
+          <div class="toggle-group" style="flex-wrap:wrap; gap:8px;">
+            <button type="button" class="toggle-btn" id="btn-trans-colectivo" onclick="toggleTransporte('colectivo')" style="flex:0 0 auto; padding:8px 14px; font-size:12px;">🚌 Colectivo</button>
+            <button type="button" class="toggle-btn" id="btn-trans-subte" onclick="toggleTransporte('subte')" style="flex:0 0 auto; padding:8px 14px; font-size:12px;">🚇 Subte</button>
+            <button type="button" class="toggle-btn" id="btn-trans-tren" onclick="toggleTransporte('tren')" style="flex:0 0 auto; padding:8px 14px; font-size:12px;">🚆 Tren</button>
+            <button type="button" class="toggle-btn" id="btn-trans-auto" onclick="toggleTransporte('auto')" style="flex:0 0 auto; padding:8px 14px; font-size:12px;">🚗 Auto propio</button>
+            <button type="button" class="toggle-btn" id="btn-trans-moto" onclick="toggleTransporte('moto')" style="flex:0 0 auto; padding:8px 14px; font-size:12px;">🏍 Moto</button>
+            <button type="button" class="toggle-btn" id="btn-trans-pie" onclick="toggleTransporte('pie')" style="flex:0 0 auto; padding:8px 14px; font-size:12px;">🚶 A pie</button>
+          </div>
+          <input type="hidden" id="transportes_usados" value="">
+        </div>
+
       </div>
     </div>
 
@@ -746,14 +771,36 @@
             </div>
           </div>
           <div class="file-item">
-            <label id="label-copia-denuncia">📑 Copia denuncia policial</label>
+            <label id="label-copia-denuncia">📑 Copia denuncia policial / Seguro del vehículo</label>
             <div class="file-drop" id="drop-copia-denuncia">
               <span class="icon">🚔</span>
-              <div class="file-label">Subir copia de la denuncia</div>
+              <div class="file-label" data-default="Subir copia de la denuncia">Subir copia de la denuncia</div>
               <input type="file" id="copia_denuncia" accept="image/*,.pdf" onchange="onFileChange(this,'drop-copia-denuncia')">
             </div>
           </div>
         </div>
+
+        <div class="divider" style="margin-top:16px;"></div>
+
+        <div class="file-grid" style="margin-top:4px;">
+          <div class="file-item">
+            <label>🪪 DNI — Frente y dorso <span class="req">*</span></label>
+            <div class="file-drop" id="drop-dni-frentes">
+              <span class="icon">🪪</span>
+              <div class="file-label" data-default="Subir ambas caras del DNI">Subir ambas caras del DNI</div>
+              <input type="file" id="dni_ambos_frentes" accept="image/*,.pdf" onchange="onFileChange(this,'drop-dni-frentes')">
+            </div>
+          </div>
+          <div class="file-item">
+            <label>🚌 Constancia SUBE <span style="color:var(--muted); font-size:10px; font-weight:400; text-transform:none; letter-spacing:0;">(opcional)</span></label>
+            <div class="file-drop" id="drop-sube">
+              <span class="icon">🚌</span>
+              <div class="file-label" data-default="Subir constancia de viaje">Subir constancia de viaje</div>
+              <input type="file" id="constancia_sube" accept="image/*,.pdf" onchange="onFileChange(this,'drop-sube')">
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -822,7 +869,7 @@
     1: ["calle_hecho","localidad_hecho","fecha_hecho","hora_hecho","relato_hecho"],
     2: ["hospital","lesiones"],
     3: ["fecha_aviso","medio_aviso","a_quien_aviso"],
-    4: ["domicilio_trabajo","puesto","jornada_horarios","domicilio_actual"],
+    4: ["domicilio_trabajo","puesto","jornada_horarios","domicilio_actual","recorrido_diario","transportes_usados"],
     5: [],
     6: ["dni_declarante","aclaracion"],
   };
@@ -903,6 +950,21 @@
         cond.classList.add('hidden');
       }
     }
+  }
+
+  // ── Selector de transportes (multi-toggle) ──
+  const transportesSeleccionados = new Set();
+  function toggleTransporte(tipo) {
+    const btn = document.getElementById('btn-trans-' + tipo);
+    if (transportesSeleccionados.has(tipo)) {
+      transportesSeleccionados.delete(tipo);
+      btn.classList.remove('active-si');
+    } else {
+      transportesSeleccionados.add(tipo);
+      btn.classList.add('active-si');
+    }
+    document.getElementById('transportes_usados').value =
+      Array.from(transportesSeleccionados).join(', ');
   }
 
   // ── Selector medio de aviso (mostrar campo "otro") ──
@@ -998,12 +1060,14 @@
     btn.textContent = "⏳ Enviando formulario...";
 
     try {
-      const [certMedicoB64, constLesionesB64, fotosLesionesB64, copiaDenunciaB64] =
+      const [certMedicoB64, constLesionesB64, fotosLesionesB64, copiaDenunciaB64, dniB64, subeB64] =
         await Promise.all([
           fileToBase64(document.getElementById("cert_medico").files[0]),
           fileToBase64(document.getElementById("const_lesiones").files[0]),
           fileToBase64(document.getElementById("fotos_lesiones").files[0]),
           fileToBase64(document.getElementById("copia_denuncia").files[0]),
+          fileToBase64(document.getElementById("dni_ambos_frentes").files[0]),
+          fileToBase64(document.getElementById("constancia_sube").files[0]),
         ]);
 
       const g  = id => document.getElementById(id)?.value?.trim() || "";
@@ -1029,11 +1093,13 @@
         medio_aviso_otro:  g("medio_aviso_otro"),
         a_quien_aviso:     g("a_quien_aviso"),
         // PASO 4 – Trabajo
-        domicilio_trabajo: g("domicilio_trabajo"),
-        puesto:            g("puesto"),
-        antiguedad:        g("antiguedad"),
-        jornada_horarios:  g("jornada_horarios"),
-        domicilio_actual:  g("domicilio_actual"),
+        domicilio_trabajo:  g("domicilio_trabajo"),
+        puesto:             g("puesto"),
+        antiguedad:         g("antiguedad"),
+        jornada_horarios:   g("jornada_horarios"),
+        domicilio_actual:   g("domicilio_actual"),
+        recorrido_diario:   g("recorrido_diario"),
+        transportes_usados: g("transportes_usados"),
         // PASO 5 – Terceros
         policia:           g("policia"),
         denuncia:          g("denuncia"),
@@ -1059,6 +1125,8 @@
         const_lesiones:    constLesionesB64,
         fotos_lesiones:    fotosLesionesB64,
         copia_denuncia:    copiaDenunciaB64,
+        dni_ambos_frentes: dniB64,
+        constancia_sube:   subeB64,
       };
 
       const res = await fetch(WEBHOOK_URL, {
