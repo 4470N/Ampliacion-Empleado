@@ -859,7 +859,7 @@
 </div><!-- /container -->
 
 <script>
-  const WEBHOOK_URL = "https://hook.us1.make.com/TU_WEBHOOK_ART_AQUI"; // ← Reemplazar con tu webhook
+  const WEBHOOK_URL = "URL_WEBHOOK_N8N"; // ← Reemplazar con la URL túnel de n8n
 
   // ── Navegación por pasos ──
   let currentStep = 1;
@@ -921,6 +921,8 @@
     document.getElementById('sec-'+currentStep).classList.add('active');
     document.getElementById('step-'+currentStep).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Inicializar canvas cuando se llega al paso 6 (estaba oculto al cargar la página)
+    if (currentStep === 6) initCanvas();
   }
 
   function prevStep(n) {
@@ -1137,9 +1139,12 @@
 
       if (!res.ok) throw new Error("HTTP " + res.status);
 
-      document.querySelector(".container").innerHTML = "";
+      // Ocultar todas las secciones del formulario
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelector('.progress-wrap').style.display = 'none';
+      document.querySelector('.hero').style.display = 'none';
       document.getElementById("screenOk").style.display = "block";
-      document.querySelector(".container").appendChild(document.getElementById("screenOk"));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
     } catch (err) {
       document.getElementById("screenError").style.display = "block";
