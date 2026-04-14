@@ -517,6 +517,14 @@
             </select>
           </div>
         </div>
+        <div class="row-2">
+          <div class="field">
+            <label>Salida del domicilio</label>
+            <input type="time" id="hora_salida_domicilio">
+          </div>
+          <div class="field">
+          </div>
+        </div>
         <div class="field">
           <label>Relato detallado del hecho <span class="req">*</span></label>
           <textarea id="relato_hecho" placeholder="Describí con el mayor detalle posible cómo sucedió el accidente: qué estabas haciendo, qué ocurrió, cómo fue el impacto, etc." style="min-height: 130px;"></textarea>
@@ -538,9 +546,15 @@
     <div class="section-card">
       <div class="section-title">🏥 Atención Médica y Lesiones <span class="badge">PASO 2 / 6</span></div>
       <div class="section-body">
-        <div class="field">
-          <label>¿En qué hospital / clínica se atendió? <span class="req">*</span></label>
-          <input type="text" id="hospital" placeholder="Nombre del establecimiento de salud" maxlength="60">
+        <div class="row-2">
+          <div class="field">
+            <label>¿En qué hospital / clínica se atendió? <span class="req">*</span></label>
+            <input type="text" id="hospital" placeholder="Nombre del establecimiento de salud" maxlength="60">
+          </div>
+          <div class="field">
+            <label>Hora de asistencia médica</label>
+            <input type="time" id="hora_asistencia_medica">
+          </div>
         </div>
         <div class="field">
           <label>¿Qué lesiones tuvo? <span class="req">*</span></label>
@@ -869,11 +883,19 @@
 
         <div class="file-grid" style="margin-top:4px;">
           <div class="file-item">
-            <label>🪪 DNI — Frente y dorso <span class="req">*</span></label>
-            <div class="file-drop" id="drop-dni-frentes">
+            <label>🪪 DNI — Frente <span class="req">*</span></label>
+            <div class="file-drop" id="drop-dni-frente">
               <span class="icon">🪪</span>
-              <div class="file-label" data-default="Subir ambas caras del DNI">Subir ambas caras del DNI</div>
-              <input type="file" id="dni_ambos_frentes" accept="image/*,.pdf" onchange="onFileChange(this,'drop-dni-frentes')">
+              <div class="file-label" data-default="Subir frente del DNI">Subir frente del DNI</div>
+              <input type="file" id="dni_frente" accept="image/*,.pdf" onchange="onFileChange(this,'drop-dni-frente')">
+            </div>
+          </div>
+          <div class="file-item">
+            <label>🪪 DNI — Dorso <span class="req">*</span></label>
+            <div class="file-drop" id="drop-dni-dorso">
+              <span class="icon">🪪</span>
+              <div class="file-label" data-default="Subir dorso del DNI">Subir dorso del DNI</div>
+              <input type="file" id="dni_dorso" accept="image/*,.pdf" onchange="onFileChange(this,'drop-dni-dorso')">
             </div>
           </div>
           <div class="file-item">
@@ -1164,13 +1186,14 @@
     btn.textContent = "⏳ Enviando formulario...";
 
     try {
-      const [certMedicoB64, constLesionesB64, fotosLesionesB64, copiaDenunciaB64, dniB64, subeB64] =
+      const [certMedicoB64, constLesionesB64, fotosLesionesB64, copiaDenunciaB64, dniFrenteB64, dniDorsoB64, subeB64] =
         await Promise.all([
           fileToBase64(document.getElementById("cert_medico").files[0]),
           fileToBase64(document.getElementById("const_lesiones").files[0]),
           fileToBase64(document.getElementById("fotos_lesiones").files[0]),
           fileToBase64(document.getElementById("copia_denuncia").files[0]),
-          fileToBase64(document.getElementById("dni_ambos_frentes").files[0]),
+          fileToBase64(document.getElementById("dni_frente").files[0]),
+          fileToBase64(document.getElementById("dni_dorso").files[0]),
           fileToBase64(document.getElementById("constancia_sube").files[0]),
         ]);
 
@@ -1184,11 +1207,13 @@
         calle_hecho:       g("calle_hecho"),
         localidad_hecho:   g("localidad_hecho"),
         fecha_hecho:       g("fecha_hecho"),
-        hora_hecho:        g("hora_hecho"),
-        turno_hecho:       gv("turno_hecho"),
-        relato_hecho:      g("relato_hecho"),
+        hora_hecho:            g("hora_hecho"),
+        hora_salida_domicilio: g("hora_salida_domicilio"),
+        turno_hecho:           gv("turno_hecho"),
+        relato_hecho:          g("relato_hecho"),
         // PASO 2 – Lesiones
-        hospital:          g("hospital"),
+        hora_asistencia_medica: g("hora_asistencia_medica"),
+        hospital:              g("hospital"),
         lesiones:          g("lesiones"),
         ambulancia:        g("ambulancia"),
         datos_ambulancia:  g("datos_ambulancia"),
@@ -1232,7 +1257,8 @@
         const_lesiones:    constLesionesB64,
         fotos_lesiones:    fotosLesionesB64,
         copia_denuncia:    copiaDenunciaB64,
-        dni_ambos_frentes: dniB64,
+        dni_frente:        dniFrenteB64,
+        dni_dorso:         dniDorsoB64,
         constancia_sube:   subeB64,
       };
 
