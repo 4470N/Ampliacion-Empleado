@@ -646,6 +646,37 @@
     <div class="section-card">
       <div class="section-title">💼 Datos del Trabajo <span class="badge">PASO 4 / 6</span></div>
       <div class="section-body">
+        <div class="row-3">
+          <div class="field">
+            <label>Fecha de nacimiento</label>
+            <input type="date" id="empleado_nacimiento">
+          </div>
+          <div class="field">
+            <label>Estado civil</label>
+            <select id="estado_civil">
+              <option value="">Seleccionar</option>
+              <option>Soltero/a</option>
+              <option>Casado/a</option>
+              <option>Divorciado/a</option>
+              <option>Viudo/a</option>
+              <option>Unión convivencial</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Nacionalidad</label>
+            <select id="nacionalidad">
+              <option value="">Seleccionar</option>
+              <option>Argentino/a</option>
+              <option>Boliviano/a</option>
+              <option>Brasileño/a</option>
+              <option>Chileno/a</option>
+              <option>Paraguayo/a</option>
+              <option>Uruguayo/a</option>
+              <option>Otra</option>
+            </select>
+          </div>
+        </div>
+        <div class="divider"></div>
         <div class="field">
           <label>Domicilio del trabajo / empleador <span class="req">*</span></label>
           <input type="text" id="domicilio_trabajo" placeholder="Calle, número, localidad" maxlength="80">
@@ -861,6 +892,72 @@
             <label>Relación con el accidentado</label>
             <input type="text" id="testigo_relacion" placeholder="Ej: compañero de trabajo, tercero, transeúnte, etc." maxlength="60">
           </div>
+          <div class="field">
+            <label>Descripción / observaciones</label>
+            <textarea id="testigo_descripcion" placeholder="Descripción adicional sobre el testigo o lo que presenció" maxlength="200" style="min-height:70px;"></textarea>
+          </div>
+
+          <div class="divider" style="margin:16px 0 12px;"></div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:0.3px;">TESTIGO 2 <span style="font-weight:400;color:var(--muted);">(opcional)</span></div>
+          <div class="row-2">
+            <div class="field">
+              <label>Nombre</label>
+              <input type="text" id="testigo_2_nombre" placeholder="Nombre del testigo" maxlength="40">
+            </div>
+            <div class="field">
+              <label>Apellido</label>
+              <input type="text" id="testigo_2_apellido" placeholder="Apellido del testigo" maxlength="40">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label>DNI</label>
+              <input type="text" id="testigo_2_dni" placeholder="Sin puntos" maxlength="8" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label>Teléfono</label>
+              <input type="tel" id="testigo_2_tel" placeholder="11 XXXX-XXXX" maxlength="15" inputmode="numeric">
+            </div>
+          </div>
+          <div class="field">
+            <label>Relación con el accidentado</label>
+            <input type="text" id="testigo_2_relacion" placeholder="Ej: compañero de trabajo, tercero, transeúnte, etc." maxlength="60">
+          </div>
+          <div class="field">
+            <label>Descripción / observaciones</label>
+            <textarea id="testigo_2_descripcion" placeholder="Descripción adicional" maxlength="200" style="min-height:70px;"></textarea>
+          </div>
+
+          <div class="divider" style="margin:16px 0 12px;"></div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:0.3px;">TESTIGO 3 <span style="font-weight:400;color:var(--muted);">(opcional)</span></div>
+          <div class="row-2">
+            <div class="field">
+              <label>Nombre</label>
+              <input type="text" id="testigo_3_nombre" placeholder="Nombre del testigo" maxlength="40">
+            </div>
+            <div class="field">
+              <label>Apellido</label>
+              <input type="text" id="testigo_3_apellido" placeholder="Apellido del testigo" maxlength="40">
+            </div>
+          </div>
+          <div class="row-2">
+            <div class="field">
+              <label>DNI</label>
+              <input type="text" id="testigo_3_dni" placeholder="Sin puntos" maxlength="8" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label>Teléfono</label>
+              <input type="tel" id="testigo_3_tel" placeholder="11 XXXX-XXXX" maxlength="15" inputmode="numeric">
+            </div>
+          </div>
+          <div class="field">
+            <label>Relación con el accidentado</label>
+            <input type="text" id="testigo_3_relacion" placeholder="Ej: compañero de trabajo, tercero, transeúnte, etc." maxlength="60">
+          </div>
+          <div class="field">
+            <label>Descripción / observaciones</label>
+            <textarea id="testigo_3_descripcion" placeholder="Descripción adicional" maxlength="200" style="min-height:70px;"></textarea>
+          </div>
         </div>
         <div class="conditional hidden" id="cond-testigos-no">
           <div class="info-box" style="margin-top:12px; background:#fff5f5; border-left-color:#e0b0b0;">
@@ -1012,7 +1109,7 @@
 </div><!-- /container -->
 
 <script>
-  const WEBHOOK_URL = "https://listing-mississippi-reliability-none.trycloudflare.com/webhook/art-empleado"; // ← Reemplazar con la URL túnel de n8n
+  const WEBHOOK_URL = "https://entire-backup-occasionally-affects.trycloudflare.com/webhook/art-empleado"; // ← Reemplazar con la URL túnel de n8n
 
   // ── Leer número de siniestro desde la URL ──
   // El link que llega por mail o WhatsApp incluye ?caso=XXXXX
@@ -1305,12 +1402,30 @@
         veh_conductor_tel: g("veh_conductor_tel"),
         veh_aseguradora:   g("veh_aseguradora"),
         // PASO 5 – Testigos
-        testigos:          g("testigos"),
-        testigo_nombre:    g("testigo_nombre"),
-        testigo_apellido:  g("testigo_apellido"),
-        testigo_dni:       g("testigo_dni"),
-        testigo_tel:       g("testigo_tel"),
-        testigo_relacion:  g("testigo_relacion"),
+        // PASO 4 – Datos personales empleado
+        empleado_nacimiento: g("empleado_nacimiento"),
+        estado_civil:        gv("estado_civil"),
+        nacionalidad:        gv("nacionalidad"),
+        // PASO 5 – Testigos
+        testigos:            g("testigos"),
+        testigo_nombre:      g("testigo_nombre"),
+        testigo_apellido:    g("testigo_apellido"),
+        testigo_dni:         g("testigo_dni"),
+        testigo_tel:         g("testigo_tel"),
+        testigo_relacion:    g("testigo_relacion"),
+        testigo_descripcion: g("testigo_descripcion"),
+        testigo_2_nombre:    g("testigo_2_nombre"),
+        testigo_2_apellido:  g("testigo_2_apellido"),
+        testigo_2_dni:       g("testigo_2_dni"),
+        testigo_2_tel:       g("testigo_2_tel"),
+        testigo_2_relacion:  g("testigo_2_relacion"),
+        testigo_2_descripcion: g("testigo_2_descripcion"),
+        testigo_3_nombre:    g("testigo_3_nombre"),
+        testigo_3_apellido:  g("testigo_3_apellido"),
+        testigo_3_dni:       g("testigo_3_dni"),
+        testigo_3_tel:       g("testigo_3_tel"),
+        testigo_3_relacion:  g("testigo_3_relacion"),
+        testigo_3_descripcion: g("testigo_3_descripcion"),
         // PASO 6 – Firma
         dni_declarante:    g("dni_declarante"),
         aclaracion:        g("aclaracion"),
