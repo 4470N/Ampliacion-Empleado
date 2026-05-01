@@ -255,6 +255,7 @@
     .file-drop .file-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
     .file-drop.has-file { border-color: var(--verde); background: #f0fdf4; }
     .file-drop.has-file .file-label { color: var(--verde); }
+    .file-hint { font-size: 11px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
 
     /* ── CANVAS FIRMA ── */
     .canvas-wrapper {
@@ -1009,7 +1010,7 @@
               <div class="file-label">Subir certificado médico</div>
               <input type="file" id="cert_medico" accept="image/*,.pdf" onchange="onFileChange(this,'drop-cert-medico')">
             </div>
-            <p style="font-size:12px;color:#4a5568;margin-top:6px;line-height:1.5;">Adjuntar certificado médico correspondiente a la primera atención recibida. Evitar certificados con fechas posteriores o futuras.</p>
+            <p class="file-hint">📋 Certificado de la primera atención recibida. No adjuntar certificados con fechas posteriores o futuras.</p>
           </div>
           <div class="file-item">
             <label>🩹 Constancia de lesiones</label>
