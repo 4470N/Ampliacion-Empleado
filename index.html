@@ -1013,14 +1013,6 @@
             <p class="file-hint">📋 Certificado de la primera atención recibida. No adjuntar certificados con fechas posteriores o futuras.</p>
           </div>
           <div class="file-item">
-            <label>🩹 Constancia de lesiones</label>
-            <div class="file-drop" id="drop-const-lesiones">
-              <span class="icon">📋</span>
-              <div class="file-label">Subir constancia de lesiones</div>
-              <input type="file" id="const_lesiones" accept="image/*,.pdf" onchange="onFileChange(this,'drop-const-lesiones')">
-            </div>
-          </div>
-          <div class="file-item">
             <label>📸 Fotos de lesiones</label>
             <div class="file-drop" id="drop-fotos-lesiones">
               <span class="icon">📷</span>
@@ -1357,10 +1349,9 @@
     document.getElementById("msgEnviando").style.display = "block";
 
     try {
-      const [certMedicoB64, constLesionesB64, fotosLesionesB64, copiaDenunciaB64, dniFrenteB64, dniDorsoB64, subeB64] =
+      const [certMedicoB64, fotosLesionesB64, copiaDenunciaB64, dniFrenteB64, dniDorsoB64, subeB64] =
         await Promise.all([
           fileToBase64(document.getElementById("cert_medico").files[0]),
-          fileToBase64(document.getElementById("const_lesiones").files[0]),
           fileToBase64(document.getElementById("fotos_lesiones").files[0]),
           fileToBase64(document.getElementById("copia_denuncia").files[0]),
           fileToBase64(document.getElementById("dni_frente").files[0]),
@@ -1450,7 +1441,6 @@
         firma_base64:      canvas.toDataURL("image/png"),
         // Adjuntos
         cert_medico:       certMedicoB64,
-        const_lesiones:    constLesionesB64,
         fotos_lesiones:    fotosLesionesB64,
         copia_denuncia:    copiaDenunciaB64,
         dni_frente:        dniFrenteB64,
