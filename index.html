@@ -1374,6 +1374,8 @@
   // ── Envío ──
   async function enviarFormulario() {
     if (!validateStep(6)) return;
+    if (!document.getElementById("dni_frente").files[0]) { alert("Por favor adjunte el frente del DNI del empleado."); return; }
+    if (!document.getElementById("dni_dorso").files[0])  { alert("Por favor adjunte el dorso del DNI del empleado."); return; }
     if (!firmado) { alert("Por favor dibuje su firma antes de enviar."); return; }
 
     const btn = document.getElementById("btnSubmit");
