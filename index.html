@@ -466,17 +466,17 @@
   <div class="steps">
     <div class="step active" id="step-1" onclick="goToStep(1)">
       <div class="step-circle">1</div>
-      <div class="step-label">Hecho</div>
+      <div class="step-label">Datos</div>
     </div>
     <div class="step-line"></div>
     <div class="step" id="step-2" onclick="goToStep(2)">
       <div class="step-circle">2</div>
-      <div class="step-label">Lesiones</div>
+      <div class="step-label">Hecho</div>
     </div>
     <div class="step-line"></div>
     <div class="step" id="step-3" onclick="goToStep(3)">
       <div class="step-circle">3</div>
-      <div class="step-label">Aviso</div>
+      <div class="step-label">Médico</div>
     </div>
     <div class="step-line"></div>
     <div class="step" id="step-4" onclick="goToStep(4)">
@@ -500,12 +500,67 @@
 <div class="container">
 
   <!-- ══════════════════════════════════════════════
-       PASO 1 – DATOS DEL HECHO
+       PASO 1 – DATOS DEL EMPLEADO
   ══════════════════════════════════════════════ -->
   <div class="section active" id="sec-1">
 
     <div class="section-card">
-      <div class="section-title">📍 Lugar y Hora del Hecho <span class="badge">PASO 1 / 6</span></div>
+      <div class="section-title">👤 Datos del Empleado <span class="badge">PASO 1 / 6</span></div>
+      <div class="section-body">
+        <div class="row-3">
+          <div class="field">
+            <label>Fecha de nacimiento</label>
+            <input type="date" id="empleado_nacimiento">
+          </div>
+          <div class="field">
+            <label>Estado civil</label>
+            <select id="estado_civil">
+              <option value="">Seleccionar</option>
+              <option>Soltero/a</option>
+              <option>Casado/a</option>
+              <option>Divorciado/a</option>
+              <option>Viudo/a</option>
+              <option>Unión convivencial</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Nacionalidad</label>
+            <select id="nacionalidad">
+              <option value="">Seleccionar</option>
+              <option>Argentino/a</option>
+              <option>Boliviano/a</option>
+              <option>Brasileño/a</option>
+              <option>Chileno/a</option>
+              <option>Paraguayo/a</option>
+              <option>Uruguayo/a</option>
+              <option>Otra</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Domicilio actual del empleado <span class="req">*</span></label>
+          <input type="text" id="domicilio_actual" placeholder="Calle, número, localidad, provincia" maxlength="80">
+        </div>
+        <div class="field">
+          <label>Teléfono de contacto <span class="req">*</span></label>
+          <input type="tel" id="tel_empleado" placeholder="Ej: 11-1234-5678" maxlength="20">
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="nextStep(1)">Continuar →</button>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════
+       PASO 2 – DATOS DEL HECHO
+  ══════════════════════════════════════════════ -->
+  <div class="section" id="sec-2">
+
+    <div class="section-card">
+      <div class="section-title">📍 Lugar y Hora del Hecho <span class="badge">PASO 2 / 6</span></div>
       <div class="section-body">
         <div class="field">
           <label>Calle donde ocurrió el hecho <span class="req">*</span></label>
@@ -553,18 +608,19 @@
     </div>
 
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="nextStep(1)">Continuar →</button>
+      <button class="btn btn-secondary" onclick="prevStep(2)">← Volver</button>
+      <button class="btn btn-primary" onclick="nextStep(2)">Continuar →</button>
     </div>
   </div>
 
 
   <!-- ══════════════════════════════════════════════
-       PASO 2 – LESIONES Y ATENCIÓN MÉDICA
+       PASO 3 – ATENCIÓN MÉDICA Y AVISO AL EMPLEADOR
   ══════════════════════════════════════════════ -->
-  <div class="section" id="sec-2">
+  <div class="section" id="sec-3">
 
     <div class="section-card">
-      <div class="section-title">🏥 Atención Médica y Lesiones <span class="badge">PASO 2 / 6</span></div>
+      <div class="section-title">🏥 Atención Médica y Lesiones <span class="badge">PASO 3 / 6</span></div>
       <div class="section-body">
         <div class="row-2">
           <div class="field">
@@ -600,20 +656,8 @@
       </div>
     </div>
 
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="prevStep(2)">← Volver</button>
-      <button class="btn btn-primary" onclick="nextStep(2)">Continuar →</button>
-    </div>
-  </div>
-
-
-  <!-- ══════════════════════════════════════════════
-       PASO 3 – AVISO AL EMPLEADOR
-  ══════════════════════════════════════════════ -->
-  <div class="section" id="sec-3">
-
     <div class="section-card">
-      <div class="section-title">📢 Aviso al Empleador <span class="badge">PASO 3 / 6</span></div>
+      <div class="section-title">📢 Aviso al Empleador</div>
       <div class="section-body">
         <div class="info-box">
           <strong>Importante:</strong> Completá los datos sobre cómo y cuándo avisaste del accidente a tu empleador o supervisor.
@@ -659,44 +703,13 @@
 
 
   <!-- ══════════════════════════════════════════════
-       PASO 4 – DATOS LABORALES
+       PASO 4 – DATOS LABORALES Y RECORRIDO
   ══════════════════════════════════════════════ -->
   <div class="section" id="sec-4">
 
     <div class="section-card">
-      <div class="section-title">💼 Datos del Trabajo <span class="badge">PASO 4 / 6</span></div>
+      <div class="section-title">💼 Datos Laborales y Recorrido <span class="badge">PASO 4 / 6</span></div>
       <div class="section-body">
-        <div class="row-3">
-          <div class="field">
-            <label>Fecha de nacimiento</label>
-            <input type="date" id="empleado_nacimiento">
-          </div>
-          <div class="field">
-            <label>Estado civil</label>
-            <select id="estado_civil">
-              <option value="">Seleccionar</option>
-              <option>Soltero/a</option>
-              <option>Casado/a</option>
-              <option>Divorciado/a</option>
-              <option>Viudo/a</option>
-              <option>Unión convivencial</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Nacionalidad</label>
-            <select id="nacionalidad">
-              <option value="">Seleccionar</option>
-              <option>Argentino/a</option>
-              <option>Boliviano/a</option>
-              <option>Brasileño/a</option>
-              <option>Chileno/a</option>
-              <option>Paraguayo/a</option>
-              <option>Uruguayo/a</option>
-              <option>Otra</option>
-            </select>
-          </div>
-        </div>
-        <div class="divider"></div>
         <div class="field">
           <label>Domicilio del trabajo / empleador <span class="req">*</span></label>
           <input type="text" id="domicilio_trabajo" placeholder="Calle, número, localidad" maxlength="80">
@@ -714,14 +727,6 @@
         <div class="field">
           <label>Jornada laboral y horarios <span class="req">*</span></label>
           <input type="text" id="jornada_horarios" placeholder="Ej: Lunes a viernes de 8:00 a 17:00 hs" maxlength="80">
-        </div>
-        <div class="field">
-          <label>Domicilio actual del empleado <span class="req">*</span></label>
-          <input type="text" id="domicilio_actual" placeholder="Calle, número, localidad, provincia" maxlength="80">
-        </div>
-        <div class="field">
-          <label>Teléfono de contacto <span class="req">*</span></label>
-          <input type="tel" id="tel_empleado" placeholder="Ej: 11-1234-5678" maxlength="20">
         </div>
 
         <div class="divider"></div>
@@ -1138,10 +1143,10 @@
   const TOTAL_STEPS = 6;
 
   const requiredByStep = {
-    1: ["calle_hecho","localidad_hecho","fecha_hecho","hora_hecho","relato_hecho"],
-    2: ["hospital","lesiones"],
-    3: ["fecha_aviso","medio_aviso","a_quien_aviso"],
-    4: ["domicilio_trabajo","puesto","jornada_horarios","domicilio_actual","tel_empleado","recorrido_diario","transportes_usados"],
+    1: ["domicilio_actual","tel_empleado"],
+    2: ["calle_hecho","localidad_hecho","fecha_hecho","hora_hecho","relato_hecho"],
+    3: ["hospital","lesiones","fecha_aviso","medio_aviso","a_quien_aviso"],
+    4: ["domicilio_trabajo","puesto","jornada_horarios","recorrido_diario","transportes_usados"],
     5: [],
     6: ["dni_declarante","aclaracion"],
   };
