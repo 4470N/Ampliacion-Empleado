@@ -509,11 +509,11 @@
       <div class="section-body">
         <div class="row-3">
           <div class="field">
-            <label>Fecha de nacimiento</label>
+            <label>Fecha de nacimiento <span class="req">*</span></label>
             <input type="date" id="empleado_nacimiento">
           </div>
           <div class="field">
-            <label>Estado civil</label>
+            <label>Estado civil <span class="req">*</span></label>
             <select id="estado_civil">
               <option value="">Seleccionar</option>
               <option>Soltero/a</option>
@@ -524,7 +524,7 @@
             </select>
           </div>
           <div class="field">
-            <label>Nacionalidad</label>
+            <label>Nacionalidad <span class="req">*</span></label>
             <select id="nacionalidad">
               <option value="">Seleccionar</option>
               <option>Argentino/a</option>
@@ -582,7 +582,7 @@
             <input type="time" id="hora_hecho">
           </div>
           <div class="field">
-            <label>Turno / Jornada</label>
+            <label>Turno / Jornada <span class="req">*</span></label>
             <select id="turno_hecho">
               <option value="">Seleccionar</option>
               <option>Mañana</option>
@@ -594,7 +594,7 @@
         </div>
         <div class="row-2">
           <div class="field">
-            <label>Salida del domicilio</label>
+            <label>Salida del domicilio <span class="req">*</span></label>
             <input type="time" id="hora_salida_domicilio">
           </div>
           <div class="field">
@@ -628,7 +628,7 @@
             <input type="text" id="hospital" placeholder="Nombre del establecimiento de salud" maxlength="60">
           </div>
           <div class="field">
-            <label>Hora de asistencia médica</label>
+            <label>Hora de asistencia médica <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
             <input type="time" id="hora_asistencia_medica">
           </div>
         </div>
@@ -640,7 +640,7 @@
         <div class="divider"></div>
 
         <div class="field">
-          <label>¿Intervino ambulancia?</label>
+          <label>¿Intervino ambulancia? <span class="req">*</span></label>
           <div class="toggle-group">
             <button type="button" class="toggle-btn" id="btn-ambulancia-si" onclick="setToggle('ambulancia','si')">✅ Sí</button>
             <button type="button" class="toggle-btn" id="btn-ambulancia-no" onclick="setToggle('ambulancia','no')">❌ No</button>
@@ -668,7 +668,7 @@
             <input type="date" id="fecha_aviso">
           </div>
           <div class="field">
-            <label>Hora del aviso</label>
+            <label>Hora del aviso <span class="req">*</span></label>
             <input type="time" id="hora_aviso">
           </div>
         </div>
@@ -720,7 +720,7 @@
             <input type="text" id="puesto" placeholder="Ej: Operario, Chofer, Administrativo..." maxlength="40">
           </div>
           <div class="field">
-            <label>Antigüedad en el puesto</label>
+            <label>Antigüedad en el puesto <span class="req">*</span></label>
             <input type="text" id="antiguedad" placeholder="Ej: 2 años, 6 meses" maxlength="20">
           </div>
         </div>
@@ -774,7 +774,7 @@
 
         <!-- Intervino policía -->
         <div class="field">
-          <label>¿Intervino la policía?</label>
+          <label>¿Intervino la policía? <span class="req">*</span></label>
           <div class="toggle-group">
             <button type="button" class="toggle-btn" id="btn-policia-si" onclick="setToggle('policia','si')">✅ Sí</button>
             <button type="button" class="toggle-btn" id="btn-policia-no" onclick="setToggle('policia','no')">❌ No</button>
@@ -784,7 +784,7 @@
 
         <!-- Hubo denuncia policial -->
         <div class="field" style="margin-top:14px;">
-          <label>¿Hubo denuncia policial?</label>
+          <label>¿Hubo denuncia policial? <span class="req">*</span></label>
           <div class="toggle-group">
             <button type="button" class="toggle-btn" id="btn-denuncia-si" onclick="setToggle('denuncia','si')">✅ Sí</button>
             <button type="button" class="toggle-btn" id="btn-denuncia-no" onclick="setToggle('denuncia','no')">❌ No</button>
@@ -808,7 +808,7 @@
 
         <!-- Vehículo que lo embistió -->
         <div class="field">
-          <label>¿Fue embestido por un vehículo?</label>
+          <label>¿Fue embestido por un vehículo? <span class="req">*</span></label>
           <div class="toggle-group">
             <button type="button" class="toggle-btn" id="btn-vehiculo-si" onclick="setToggle('vehiculo','si')">✅ Sí</button>
             <button type="button" class="toggle-btn" id="btn-vehiculo-no" onclick="setToggle('vehiculo','no')">❌ No</button>
@@ -882,7 +882,7 @@
 
         <!-- Testigos -->
         <div class="field">
-          <label>¿Hubo testigos del accidente?</label>
+          <label>¿Hubo testigos del accidente? <span class="req">*</span></label>
           <div class="toggle-group">
             <button type="button" class="toggle-btn" id="btn-testigos-si" onclick="setToggle('testigos','si')">✅ Sí</button>
             <button type="button" class="toggle-btn" id="btn-testigos-no" onclick="setToggle('testigos','no')">❌ No</button>
@@ -1014,7 +1014,7 @@
 
         <div class="file-grid">
           <div class="file-item">
-            <label>📄 Certificado médico</label>
+            <label>📄 Certificado médico <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
             <div class="file-drop" id="drop-cert-medico">
               <span class="icon">🏥</span>
               <div class="file-label">Subir certificado médico</div>
@@ -1023,7 +1023,7 @@
             <p class="file-hint">📋 Certificado de la primera atención recibida. No adjuntar certificados con fechas posteriores o futuras.</p>
           </div>
           <div class="file-item">
-            <label>📸 Fotos de lesiones</label>
+            <label>📸 Fotos de lesiones <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
             <div class="file-drop" id="drop-fotos-lesiones">
               <span class="icon">📷</span>
               <div class="file-label">Subir foto de las lesiones</div>
@@ -1031,7 +1031,7 @@
             </div>
           </div>
           <div class="file-item">
-            <label id="label-copia-denuncia">📑 Copia denuncia policial / Seguro del vehículo</label>
+            <label id="label-copia-denuncia">📑 Copia denuncia policial / Seguro del vehículo <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
             <div class="file-drop" id="drop-copia-denuncia">
               <span class="icon">🚔</span>
               <div class="file-label" data-default="Subir copia de la denuncia">Subir copia de la denuncia</div>
@@ -1085,6 +1085,7 @@
             <input type="text" id="aclaracion" placeholder="Aclaración de firma" maxlength="40">
           </div>
         </div>
+        <label>Firma del empleado <span class="req">*</span></label>
         <div class="canvas-wrapper" id="wrapper">
           <canvas id="canvas"></canvas>
           <div class="canvas-hint" id="hint">✍️ Firmá aquí con el dedo o mouse</div>
@@ -1143,11 +1144,11 @@
   const TOTAL_STEPS = 6;
 
   const requiredByStep = {
-    1: ["domicilio_actual","tel_empleado"],
-    2: ["calle_hecho","localidad_hecho","fecha_hecho","hora_hecho","relato_hecho"],
-    3: ["hospital","lesiones","fecha_aviso","medio_aviso","a_quien_aviso"],
-    4: ["domicilio_trabajo","puesto","jornada_horarios","recorrido_diario","transportes_usados"],
-    5: [],
+    1: ["domicilio_actual","tel_empleado","empleado_nacimiento","estado_civil","nacionalidad"],
+    2: ["calle_hecho","localidad_hecho","fecha_hecho","hora_hecho","relato_hecho","turno_hecho","hora_salida_domicilio"],
+    3: ["hospital","lesiones","fecha_aviso","medio_aviso","a_quien_aviso","ambulancia","hora_aviso"],
+    4: ["domicilio_trabajo","puesto","jornada_horarios","recorrido_diario","transportes_usados","antiguedad"],
+    5: ["policia","denuncia","vehiculo","testigos"],
     6: ["dni_declarante","aclaracion"],
   };
 
@@ -1172,6 +1173,21 @@
         }
       }
     });
+    // Validar firma en paso 6
+    if (n === 6) {
+      const canvasWrapper = document.getElementById('wrapper');
+      const prevFirmaMsg = canvasWrapper?.parentElement?.querySelector('.field-error-msg-firma');
+      if (prevFirmaMsg) prevFirmaMsg.remove();
+      if (!firmado) {
+        ok = false;
+        if (canvasWrapper) {
+          const msg = document.createElement('div');
+          msg.className = 'field-error-msg field-error-msg-firma';
+          msg.innerHTML = '⚠ La firma es obligatoria';
+          canvasWrapper.insertAdjacentElement('afterend', msg);
+        }
+      }
+    }
     if (!ok) {
       const first = document.querySelector('#sec-'+n+' .field-error');
       if (first) first.scrollIntoView({ behavior:'smooth', block:'center' });
