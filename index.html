@@ -573,13 +573,13 @@
           </div>
           <div class="field">
             <label>Fecha del hecho <span class="req">*</span></label>
-            <input type="date" id="fecha_hecho">
+            <input type="date" id="fecha_hecho" min="2000-01-01">
           </div>
         </div>
         <div class="row-2">
           <div class="field">
             <label>Horario del hecho <span class="req">*</span></label>
-            <input type="time" id="hora_hecho">
+            <input type="time" id="hora_hecho" min="00:00" max="23:59">
           </div>
           <div class="field">
             <label>Turno / Jornada <span class="req">*</span></label>
@@ -629,7 +629,7 @@
           </div>
           <div class="field">
             <label>Hora de asistencia médica <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
-            <input type="time" id="hora_asistencia_medica">
+            <input type="time" id="hora_asistencia_medica" min="00:00" max="23:59">
           </div>
         </div>
         <div class="field">
@@ -665,11 +665,11 @@
         <div class="row-2">
           <div class="field">
             <label>Fecha en que dio aviso <span class="req">*</span></label>
-            <input type="date" id="fecha_aviso">
+            <input type="date" id="fecha_aviso" min="2000-01-01">
           </div>
           <div class="field">
             <label>Hora del aviso <span class="req">*</span></label>
-            <input type="time" id="hora_aviso">
+            <input type="time" id="hora_aviso" min="00:00" max="23:59">
           </div>
         </div>
         <div class="field">
@@ -1635,6 +1635,13 @@
     const bubble = document.getElementById('waBubble');
     bubble.classList.toggle('visible');
   }
+  (function() {
+    var hoy = new Date().toISOString().split('T')[0];
+    ["fecha_hecho", "fecha_aviso"].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.max = hoy;
+    });
+  })();
 </script>
 
 </body>
