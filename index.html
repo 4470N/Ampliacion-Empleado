@@ -1408,12 +1408,15 @@
   }
 
   // ── Envío ──
+  let enviando = false;
   async function enviarFormulario() {
+    if (enviando) return;
     if (!validateStep(6)) return;
     if (!document.getElementById("dni_frente").files[0]) { alert("Por favor adjunte el frente del DNI del empleado."); return; }
     if (!document.getElementById("dni_dorso").files[0])  { alert("Por favor adjunte el dorso del DNI del empleado."); return; }
     if (!firmado) { alert("Por favor dibuje su firma antes de enviar."); return; }
 
+    enviando = true;
     const btn = document.getElementById("btnSubmit");
     btn.disabled    = true;
     btn.textContent = "⏳ Enviando formulario...";
@@ -1554,8 +1557,6 @@
     } catch (err) {
       document.getElementById("modalProgress").style.display = "none";
       document.getElementById("modalError").style.display = "block";
-      btn.disabled    = false;
-      btn.textContent = "✅ Enviar Formulario ART";
     }
   }
 
@@ -1563,6 +1564,12 @@
     document.getElementById("modalEnviando").classList.remove("activo");
     document.getElementById("modalError").style.display = "none";
     document.getElementById("modalProgress").style.display = "block";
+    enviando = false;
+    const btn = document.getElementById("btnSubmit");
+    if (btn) {
+      btn.disabled    = false;
+      btn.textContent = "✅ Enviar Formulario ART";
+    }
   }
 </script>
 
