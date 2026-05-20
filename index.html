@@ -1204,12 +1204,39 @@
         }
       }
     });
-    // Validar formato de fechas
+    // Validar formato de fechas (texto dd/mm/aaaa)
     const fechasPorPaso = { 2: ['fecha_hecho'], 3: ['fecha_aviso'] };
     (fechasPorPaso[n] || []).forEach(id => {
       const el = document.getElementById(id);
       if (el && el.value.trim() && !validarFecha(el)) ok = false;
     });
+
+    // Validar fecha de nacimiento (paso 1): ano entre 1900 y hoy, no futuro
+    if (n === 1) {
+      const fn = document.getElementById('empleado_nacimiento');
+      if (fn && fn.value.trim()) {
+        const partes = fn.value.split('-');
+        const year   = parseInt(partes[0], 10);
+        const hoy    = new Date();
+        const hoyStr = hoy.toISOString().split('T')[0];
+        let invalido = false;
+        if (isNaN(year) || partes[0].length !== 4 || year < 1900 || year > hoy.getFullYear()) invalido = true;
+        if (fn.value > hoyStr) invalido = true;
+        if (invalido) {
+          ok = false;
+          const field = fn.closest('.field');
+          if (field) {
+            const existing = field.querySelector('.field-error-msg');
+            if (existing) existing.remove();
+            field.classList.add('field-error');
+            const msg = document.createElement('div');
+            msg.className = 'field-error-msg';
+            msg.innerHTML = '⚠ Ingresá una fecha de nacimiento válida (año entre 1900 y ' + hoy.getFullYear() + ')';
+            field.appendChild(msg);
+          }
+        }
+      }
+    }
     // Validar firma en paso 6
     if (n === 6) {
       const canvasWrapper = document.getElementById('wrapper');
