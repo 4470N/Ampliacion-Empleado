@@ -523,7 +523,7 @@
         <div class="row-3">
           <div class="field">
             <label>Fecha de nacimiento <span class="req">*</span></label>
-            <input type="date" id="empleado_nacimiento">
+            <input type="date" id="empleado_nacimiento" min="1900-01-01" oninput="limitarAnioFecha(this)">
           </div>
           <div class="field">
             <label>Estado civil <span class="req">*</span></label>
@@ -1152,6 +1152,23 @@
   // El link que llega por mail o WhatsApp incluye ?caso=XXXXX
   const _urlParams   = new URLSearchParams(window.location.search);
   const NRO_SINIESTRO = _urlParams.get('caso') || '';
+
+  // ── Limitar fecha de nacimiento: año 4 dígitos máx, sin fechas futuras ──
+  (function() {
+    const fechaNac = document.getElementById('empleado_nacimiento');
+    if (fechaNac) {
+      fechaNac.max = new Date().toISOString().split('T')[0];
+    }
+  })();
+
+  function limitarAnioFecha(input) {
+    if (!input.value) return;
+    const partes = input.value.split('-');
+    if (partes.length >= 1 && partes[0].length > 4) {
+      partes[0] = partes[0].substring(0, 4);
+      input.value = partes.join('-');
+    }
+  }
 
   // ── Navegación por pasos ──
   let currentStep = 1;
